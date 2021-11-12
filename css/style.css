@@ -1,0 +1,41 @@
+
+
+html, body{
+    height: 100%;
+    margin: 0px;
+    background:  radial-gradient(20% 40%, white, pink 80%);
+}
+
+header{
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    min-height: 136px;
+
+    background-color: rgb(233, 132, 49);
+
+    border-bottom-right-radius: 64px;
+    border-bottom-left-radius: 64px;
+
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.32);
+}
+
+header *{
+    margin: 0px;
+}
+
+header h1{
+    te
+}
+
+footer{
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    min-height: 32px;
+
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+    background-color: #f6f6f6;
+}
