@@ -265,7 +265,7 @@ footer p {
 #category_form .chapter{
     grid-column: 2;
 }
-/*Category start*/
+/*Category end*/
 
 #text_box{
 
@@ -278,6 +278,7 @@ footer p {
     margin: 0px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 16px;
     padding: 16px;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -291,3 +292,43 @@ footer p {
     margin-bottom: 8px;
 }
 
+
+/*Question start*/
+#question_answers{
+
+    display: grid;
+
+    max-height: calc(96px - 16px);
+    max-width: calc(256px - 32px);
+    border-radius: 8px;
+    
+    overflow: auto;
+
+    margin: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 16px;
+    padding: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+
+    background-color: white;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32);
+}
+#question_buttons{
+    display: grid;
+    grid-template-columns: 1fr, 1fr;
+    margin: 0px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+#question_submit{
+    border-radius: 8px;
+
+    height: 32px;
+    border: 0px;
+    background-color: rgb(143, 197, 15);
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32);
+}
+/*Question end*/
