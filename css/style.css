@@ -1,41 +1,293 @@
 
 
-html, body{
+:root{
+    position: fixed;
     height: 100%;
-    margin: 0px;
-    background:  radial-gradient(20% 40%, white, pink 80%);
+    width: 100%;
+
+    background-image: linear-gradient(140deg, #d4fc79 0%, #96e6a1 60%);
 }
 
+body {
+    margin: 0px;
+}
+
+@media screen and (min-width: 414px) {
+    body{
+    
+        margin: 0px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 414px;
+    
+        border-left: 1px solid rgba(196, 204, 162, 0.616);
+        border-right: 1px solid rgba(196, 204, 162, 0.616);;
+        box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.411);
+    }
+}
+
+main{
+    overflow: auto;
+    height: calc(100vh - 168px);
+}
+
+/*Header and Footer start*/
 header{
     display: grid;
     align-content: center;
     justify-content: center;
-    min-height: 136px;
-
-    background-color: rgb(233, 132, 49);
+    height: 136px;
 
     border-bottom-right-radius: 64px;
     border-bottom-left-radius: 64px;
 
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.32);
+    background-image: linear-gradient(40deg, #f6d365 20%, #fda085 100%);
+    background-blend-mode: screen;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32);
 }
 
 header *{
     margin: 0px;
 }
 
-header h1{
-    te
-}
-
 footer{
-    position: fixed;
     left: 0px;
     bottom: 0px;
     width: 100%;
-    min-height: 32px;
-
+    height: 32px;
     border-top-right-radius: 16px;
     border-top-left-radius: 16px;
-    background-color: #f6f6f6;
+
+    background-image: linear-gradient(175deg, #dfdfdf  0%, #e2dac5 10%, #d3cbb6 80%, #e0d5af 100%);
+    
+    box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.123);
 }
+
+footer *{
+    margin: 0px;
+}
+
+footer p {
+    position: relative;
+    top: 6px;
+    left: 20px;
+    
+}
+/*Header and Footer end*/
+
+/*Loading Animation start*/
+#load_animation{
+    display:  grid;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+@keyframes rotateBgBox {
+    0% { transform: rotate(0deg);}
+
+
+    50% { transform: rotate(180deg);}
+
+    100% { transform: rotate(360deg);}
+}
+#load_bgBox{
+    height: 144px;
+    width:  144px;
+    border-radius: 1px;
+
+    border: 8px solid tomato;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.32), inset 0px 0px 6px rgba(0, 0, 0, 0.32);      
+
+    animation-name: rotateBgBox;
+    animation-duration: 4s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+
+}
+
+@keyframes fillFillBox {
+    0% { height: 100%;}
+    20% { height: 100%;}
+
+    39% { height: 0%;}
+    41% { height: 5%;}
+    43% { height: 0%;}
+    45% { height: 2%;}
+
+    50% { height: 0%;}
+    70% { height: 0%;}
+
+    89% { height: 100%;}
+    91% { height: 95%;}
+    93% { height: 100%;}
+    95% { height: 98%;}
+
+    100% { height: 100%;}
+}
+#load_fillBox{
+    height: 100%;
+    background-color: tomato;
+    animation-name: fillFillBox;
+    animation-duration: 4s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+}
+/*Loading Animation end*/
+
+/*Login start*/
+#login_holde{
+    height: 100%;
+    width: 100%;
+}
+
+#login_holde form{
+    display:  grid;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+#login_testFields{
+    width: 248px;
+    height: 120px;
+}
+
+#login_testFields {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    width: 248px;
+    height: 120px;
+    border-radius:32px ;
+    
+    background: white;
+    border: 0px;
+    box-shadow: 2px 8px 12px rgba(0, 0, 0, 0.199);
+}
+
+#login_testFields input{
+    width: 168px;
+    height: 32px;
+    border-radius: 48px;
+
+    margin: 4px;
+    padding-left: 16px;
+
+    border: 1px rgb(197, 197, 197) solid;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05) inset;
+}
+#login_testFields input:focus-visible{
+    outline: 0px;
+    border: 1px rgb(168, 168, 168) solid;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0) inset;
+}
+
+#login_submitButton{
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+#login_submitButton input{
+    min-height: 64px;
+    min-width: 144px;
+    border-radius: 32px ;
+
+    border: 0px;
+    box-shadow: 2px 8px 12px rgba(0, 0, 0, 0.199);
+    background-image: linear-gradient(145deg, #77cdff 5%, #3399d4 100%);
+}
+
+#login_submitButton input:focus{
+    min-height: 62px;
+    min-width: 142px;
+
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.199);
+    background-color: #3399d4;
+    
+}
+/*Login end*/
+
+#contentContainer{
+    height: calc(100% - 32px);
+    width: calc(100% - 32px);
+    border-radius: 12px;
+    margin: 16px;
+
+    overflow: auto;
+
+    background-color: #dfdfdf;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.13) inset;
+}
+
+/*Category start*/
+#category_form{
+    display: grid;
+    grid-template-columns: 1fr, 1fr;
+
+    width: calc(100% - 32px);
+    min-height: 32px;
+
+    margin-top: 24px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+    margin: 16px;
+
+}
+#category_form select{
+    margin: 0px;
+    margin-left: 4px;
+    margin-right: 4px;
+    border-radius: 12px;
+
+    
+
+    background-color: white;
+    border: 0px rgb(197, 197, 197) solid;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32), 2px 2px 2px rgba(0, 0, 0, 0.05) inset;
+
+}
+#category_form select:focus-visible{
+    outline: 0px;
+    border: 0px rgb(168, 168, 168) solid;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.192);
+}
+
+#category_form .theme{
+    grid-column: 1;
+}
+#category_form .chapter{
+    grid-column: 2;
+}
+/*Category start*/
+
+#text_box{
+
+    max-height: calc(128px - 16px);
+    max-width: calc(256px - 32px);
+    border-radius: 8px;
+    
+    overflow: auto;
+
+    margin: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+
+    background-color: white;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32);
+}
+#text_box p{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+

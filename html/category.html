@@ -11,20 +11,30 @@
         <!--<link rel="icon" type="image/png" href="../icon.png">-->
     </head>
 
-    <body class="max-width">
+    <body>
         <header>
             <h1>Quiz</h1>
             <p>by Rudolf Baun</p> 
         </header>
     
         <main>
+            <div id="contentContainer">
 
-            <div id="load_animation">
-                <div id=load_bgBox>
-                    <div id="load_fillBox"></div>
+                <form id="category_form">
+                    <select class="theme">
+                        <option value="null">No Theme</option>
+                        <option value="1">One</option>
+                    </select>
+                    <select class="chapter">
+                        <option value="null">No Chapter</option>
+                        <option value="1">One</option>
+                    </select>
+                </form>
+
+                <div id="text_box">
+                    <p>Choose a theme and chapter</p>
                 </div>
             </div>
-
         </main>
     
         <footer>
