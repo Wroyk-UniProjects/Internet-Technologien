@@ -214,6 +214,7 @@ footer p {
 }
 /*Login end*/
 
+/*contentContainer start*/
 #contentContainer{
     display: grid;
     grid-template-columns: 1fr;
@@ -235,6 +236,10 @@ footer p {
 .result{
     grid-template-rows: 1fr 6fr 2fr;
 }
+.category{
+    grid-template-rows: 1fr 2fr 4fr;
+}
+
 @media screen and (min-height: 812px){ 
     .questions{
         grid-template-rows: 1fr 3fr 5fr;
@@ -242,8 +247,11 @@ footer p {
     .result{
         grid-template-rows: 1fr 8fr 2fr;;
     }
+    .category{
+        grid-template-rows: 1fr 2fr 7fr;
+    }
 }
-
+/*contentContainer end*/
 
 /*Category start*/
 #category_form{
