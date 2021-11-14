@@ -217,7 +217,7 @@ footer p {
 #contentContainer{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 2fr 4fr;
+    
 
     height: calc(100% - 32px);
     width: calc(100% - 32px);
@@ -229,11 +229,21 @@ footer p {
     background-color: #dfdfdf80;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.13) inset;
 }
-@media screen and (min-height: 414px){
-    #contentContainer{
-        grid-template-rows: 1fr 4fr 5fr;
+.questions{
+    grid-template-rows: 1fr 2fr 4fr;
+}
+.result{
+    grid-template-rows: 1fr 6fr 2fr;
+}
+@media screen and (min-height: 812px){ 
+    .questions{
+        grid-template-rows: 1fr 3fr 5fr;
+    }
+    .result{
+        grid-template-rows: 1fr 8fr 2fr;;
     }
 }
+
 
 /*Category start*/
 #category_form{
@@ -253,9 +263,10 @@ footer p {
     margin: 0px;
     margin-left: 4px;
     margin-right: 4px;
-    border-radius: 12px;
+    border-radius: 32px;
 
-    
+    padding-left: 16px;
+    padding-right: 8px;
 
     background-color: white;
     border: 0px rgb(197, 197, 197) solid;
@@ -348,11 +359,69 @@ footer p {
 #question_submit{
     height: 100%;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 32px;
 
     
     border: 0px;
     background-color: rgb(143, 197, 15);
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32);
 }
+#question_submit:focus{
+    height: calc(100% - 4px);
+    width: calc(100% - 4px);
+    border-radius: 32px;
+
+    
+    border: 0px;
+    background-color: rgb(143, 197, 15);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.32);
+}
 /*Question end*/
+
+/*Result start*/
+#result_button_hold{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+#result_button_hold button{
+    margin: 4px;
+    border-radius: 32px;
+
+    border: 0px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32);
+}
+#result_button_hold button:focus{
+    margin: 4px;
+    border-radius: 32px;
+
+    border: 0px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.32);
+}
+
+#result_repeat{
+    grid-column: 1;
+    grid-row: 1;
+
+    background-color: rgb(254, 255, 181);
+}   
+
+#result_next{
+    grid-column: 2;
+    grid-row: 1 / 3;
+
+    background-color: rgb(126, 190, 118);
+}
+
+#result_reset{
+    grid-column: 1;
+    grid-row: 2;
+
+    background-color: rgb(185, 147, 147);
+}
+
+/*Result end*/
