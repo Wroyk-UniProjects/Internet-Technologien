@@ -240,6 +240,12 @@ footer p {
     grid-template-rows: 1fr 2fr 4fr;
 }
 
+.summery{
+    grid-template-rows: 1fr 8fr;
+    justify-items: center;
+    align-items: center;
+}
+
 @media screen and (min-height: 812px){ 
     .questions{
         grid-template-rows: 1fr 3fr 5fr;
@@ -249,6 +255,9 @@ footer p {
     }
     .category{
         grid-template-rows: 1fr 2fr 7fr;
+    }
+    .summery{
+        grid-template-rows: 1fr 10fr;
     }
 }
 /*contentContainer end*/
@@ -431,5 +440,26 @@ footer p {
 
     background-color: rgb(185, 147, 147);
 }
-
 /*Result end*/
+
+/*Summery Start*/
+#summery_hold{
+    margin: 16px;
+}
+.circle{
+    border-radius: 100%;
+    background-color: tomato;
+
+    width: 256px;
+    height: 256px;
+    background-image: conic-gradient(green 64%, red 17%);
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32);
+}
+
+.circle p{
+    position: relative;
+
+    background-color: rgba(255, 255, 255, 0.568);
+}
+
+/*Summery end*/
