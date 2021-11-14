@@ -319,6 +319,8 @@ footer p {
 #question_buttons{
     display: grid;
     grid-template-columns: 1fr, 1fr;
+    position: relative;
+    bottom: 0px;
     margin: 0px;
     margin-left: 16px;
     margin-right: 16px;
