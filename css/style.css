@@ -215,6 +215,10 @@ footer p {
 /*Login end*/
 
 #contentContainer{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 4fr;
+
     height: calc(100% - 32px);
     width: calc(100% - 32px);
     border-radius: 12px;
@@ -222,8 +226,13 @@ footer p {
 
     overflow: auto;
 
-    background-color: #dfdfdf;
+    background-color: #dfdfdf80;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.13) inset;
+}
+@media screen and (min-height: 414px){
+    #contentContainer{
+        grid-template-rows: 1fr 4fr 5fr;
+    }
 }
 
 /*Category start*/
@@ -269,16 +278,17 @@ footer p {
 
 #text_box{
 
-    max-height: calc(128px - 16px);
-    max-width: calc(256px - 32px);
+    /*max-height: calc(128px - 16px);
+    max-width: calc(256px - 32px);*/
     border-radius: 8px;
     
     overflow: auto;
 
-    margin: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
     padding: 16px;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -294,21 +304,29 @@ footer p {
 
 
 /*Question start*/
-#question_answers{
-
+#question_form{
     display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20fr 6fr 1fr;
 
-    max-height: calc(96px - 16px);
-    max-width: calc(256px - 32px);
+}
+#question_answers{
+    display: grid;
+    align-content: space-evenly;
+    
+    max-height: calc(100%);
+    max-width: calc(100%);
     border-radius: 8px;
     
     overflow: auto;
 
-    margin: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 16px;
-    padding: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 16px;
+    margin-right: 16px;
+    
+    padding-left: 16px;
+    padding-right: 16px;
     padding-top: 8px;
     padding-bottom: 8px;
 
@@ -317,18 +335,22 @@ footer p {
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32);
 }
 #question_buttons{
-    display: grid;
-    grid-template-columns: 1fr, 1fr;
-    position: relative;
-    bottom: 0px;
-    margin: 0px;
+    width: calc(100% - 32px);
+    min-height: 32px;
+    max-height: 64px;
+
+
     margin-left: 16px;
     margin-right: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 #question_submit{
+    height: 100%;
+    width: 100%;
     border-radius: 8px;
 
-    height: 32px;
+    
     border: 0px;
     background-color: rgb(143, 197, 15);
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.32);
