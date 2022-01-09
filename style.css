@@ -139,12 +139,12 @@ footer p {
 /*Loading Animation end*/
 
 /*Login start*/
-#login_holde{
+#login_hold{
     height: 100%;
     width: 100%;
 }
 
-#login_holde form{
+#login_hold form{
     display:  grid;
     align-content: center;
     justify-content: center;
@@ -152,12 +152,12 @@ footer p {
     width: 100%;
 }
 
-#login_testFields{
+#login_textFields{
     width: 248px;
     height: 120px;
 }
 
-#login_testFields {
+#login_textFields {
     display: grid;
     align-content: center;
     justify-content: center;
@@ -170,7 +170,7 @@ footer p {
     box-shadow: 2px 8px 12px rgba(0, 0, 0, 0.199);
 }
 
-#login_testFields input{
+#login_textFields input{
     width: 168px;
     height: 32px;
     border-radius: 48px;
@@ -181,7 +181,7 @@ footer p {
     border: 1px rgb(197, 197, 197) solid;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05) inset;
 }
-#login_testFields input:focus-visible{
+#login_textFields input:focus-visible{
     outline: 0px;
     border: 1px rgb(168, 168, 168) solid;
     box-shadow: 2px 2px 0px rgba(0, 0, 0, 0) inset;
@@ -265,7 +265,7 @@ footer p {
 /*Category start*/
 #category_form{
     display: grid;
-    grid-template-columns: 1fr, 1fr;
+    grid-template-columns: 1fr 1fr;
 
     width: calc(100% - 32px);
     min-height: 32px;
