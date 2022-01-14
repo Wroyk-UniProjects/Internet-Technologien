@@ -8,7 +8,7 @@ const quiz = {
 
         //this.setupLoginScreen();
         //this.cycleThrowScreens();
-        this.setupQuestions({},{}, this.demoQuestionText,5)
+        this.setupResultScreen({}, {}, false)
         
     },
 
@@ -134,7 +134,7 @@ const quiz = {
         return category_form
     },
 
-    setupCategorySelect: function(themes, chapters){
+    setupCategorySelectScreen: function(themes, chapters){
         this.mainElement.textContent = '';
 
         const contentContainer_div = this.createElement('div', 'contentContainer', 'category');
@@ -157,53 +157,97 @@ const quiz = {
         this.mainElement.appendChild(contentContainer_div)
     },
 
-    setupQuestions: function(themes, chapters, question, answers){
+    setupQuestionsScreen: function(themes, chapters, question, answers){
         this.mainElement.textContent = '';
 
         const contentContainer_div = this.createElement('div', 'contentContainer', 'questions');
         const question_div = this.createElement('div', 'text_box');
-        const question_form = this.createElement('form', 'question_form')
-        const answers_div = this.createElement('div', 'question_answers')
-        const answers_buttons_div = this.createElement('div', 'question_buttons')
+        const question_form = this.createElement('form', 'question_form');
+        const answers_div = this.createElement('div', 'question_answers');
+        const answers_buttons_div = this.createElement('div', 'question_buttons');
 
-        const category_form = this.buildCategoryForm(themes, chapters)
-        contentContainer_div.appendChild(category_form)
+        const category_form = this.buildCategoryForm(themes, chapters);
+        contentContainer_div.appendChild(category_form);
 
 
-        const question_text_p = this.createElement('p')
-        question_text_p.innerText = question
-        question_div.appendChild(question_text_p)
+        const question_text_p = this.createElement('p');
+        question_text_p.innerText = question;
+        question_div.appendChild(question_text_p);
 
-        contentContainer_div.appendChild(question_div)
+        contentContainer_div.appendChild(question_div);
 
 
         for (let i = 0; i < answers; i++){
             //temp for Lab 2
-            const label = this.createElement('label')
+            const label = this.createElement('label');
 
-            const input = this.createElement('input')
-            input.name = (i+1).toString()
-            input.type = 'checkbox'
-            input.value = i+1
-            label.appendChild(input)
+            const input = this.createElement('input');
+            input.name = (i+1).toString();
+            input.type = 'checkbox';
+            input.value = i+1;
+            label.appendChild(input);
 
-            label.appendChild(document.createTextNode((i+1).toString() + '. answer'))
+            label.appendChild(document.createTextNode((i+1).toString() + '. answer'));
 
-            answers_div.appendChild(label)
+            answers_div.appendChild(label);
         }
 
-        question_form.appendChild(answers_div)
+        question_form.appendChild(answers_div);
 
-        const submit_input = this.createElement('input', 'question_submit')
-        submit_input.type = 'submit'
-        submit_input.value = 'Answer'
-        answers_buttons_div.appendChild(submit_input)
-        question_form.appendChild(answers_buttons_div)
+        const submit_input = this.createElement('input', 'question_submit');
+        submit_input.type = 'submit';
+        submit_input.value = 'Answer';
+        answers_buttons_div.appendChild(submit_input);
+        question_form.appendChild(answers_buttons_div);
 
-        contentContainer_div.appendChild(question_form)
+        contentContainer_div.appendChild(question_form);
 
 
-        this.mainElement.appendChild(contentContainer_div)
+        this.mainElement.appendChild(contentContainer_div);
+    },
+
+    setupResultScreen: function(themes, chapters, correct){
+        this.mainElement.textContent = '';
+
+        const contentContainer_div = this.createElement('div', 'contentContainer', 'result');
+
+        const category_form = this.buildCategoryForm(themes, chapters);
+        contentContainer_div.appendChild(category_form);
+
+        const result_box_div = this.createElement('div', 'result_box');
+        const result_image_img = this.createElement('img');
+        result_image_img.width = 300;
+        result_image_img.height = 300;
+
+        if (correct){
+            result_image_img.src = 'images/verified_black_24dp.svg';
+            result_image_img.alt = 'correct';
+        }else{
+            result_image_img.src = 'images/dangerous_black_24dp.svg';
+            result_image_img.alt = 'wrong';
+        }
+
+        result_box_div.appendChild(result_image_img);
+        contentContainer_div.appendChild(result_box_div);
+
+
+        const button_hold_div = this.createElement('div', 'result_button_hold');
+
+        const result_repeat_button =this.createElement('button', 'result_repeat');
+        result_repeat_button.innerText = 'Repeat';
+        button_hold_div.appendChild(result_repeat_button);
+
+        const result_next_button =this.createElement('button', 'result_next');
+        result_next_button.innerText = 'Next';
+        button_hold_div.appendChild(result_next_button);
+
+        const result_reset_button =this.createElement('button', 'result_reset');
+        result_reset_button.innerText = 'Reset Chapter';
+        button_hold_div.appendChild(result_reset_button);
+
+        contentContainer_div.appendChild(button_hold_div);
+
+        this.mainElement.appendChild(contentContainer_div);
     },
 
     waitFor: function(ms){
@@ -253,13 +297,19 @@ const quiz = {
             await this.waitFor(waitTime);
 
             this.setupWaitScreen();
-            await this.waitFor(waitTime)
+            await this.waitFor(waitTime*3);
 
-            this.setupCategorySelect({},{});
+            this.setupCategorySelectScreen({},{});
             await this.waitFor(waitTime);
 
             this.setupWaitScreen();
-            await this.waitFor(waitTime)
+            await this.waitFor(waitTime);
+
+            this.setupQuestions({},{}, this.demoQuestionText,5);
+            await this.waitFor(waitTime);
+
+            this.setupWaitScreen();
+            await this.waitFor(waitTime);
         }
         
     }
