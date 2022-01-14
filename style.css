@@ -12,17 +12,17 @@ body {
     margin: 0px;
 }
 
-@media screen and (min-width: 414px) {
+@media screen and (min-width: 512px) {
     body{
     
         margin: 0px;
         margin-left: auto;
         margin-right: auto;
-        width: 414px;
+        width: 512px;
     
-        border-left: 1px solid rgba(196, 204, 162, 0.616);
+        /*border-left: 1px solid rgba(196, 204, 162, 0.616);
         border-right: 1px solid rgba(196, 204, 162, 0.616);;
-        box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.411);
+        box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.411);*/
     }
 }
 
