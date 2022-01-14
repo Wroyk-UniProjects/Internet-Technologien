@@ -22,7 +22,6 @@ const quiz = {
     },
 
     buildHeader: function(title, name) {
-        //const headerElement = document.createElement('header');
         const headerElement = this.createElement('header');
         
         const quizTitle_h1  = this.createElement('h1');
