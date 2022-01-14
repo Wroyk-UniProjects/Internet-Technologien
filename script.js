@@ -7,9 +7,7 @@ const quiz = {
         this.setupBody('Quiz', 'Rudolf Baun');
 
         //this.setupLoginScreen();
-        //this.cycleThrowScreens();
-        this.setupResultScreen({}, {}, false)
-        
+        this.cycleThrowScreens();
     },
 
     setupBody: function(title, name) {
@@ -250,6 +248,50 @@ const quiz = {
         this.mainElement.appendChild(contentContainer_div);
     },
 
+    setupSummeryScreen: function(themes, chapters, summery){
+        this.mainElement.textContent = '';
+
+        const contentContainer_div = this.createElement('div', 'contentContainer', 'summery');
+
+        const category_form = this.buildCategoryForm(themes, chapters);
+        contentContainer_div.appendChild(category_form);
+
+
+        const summery_hold_div = this.createElement('div', 'summery_hold');
+
+        const chart_div =this.createElement('div', '', 'chart');
+        chart_div.style = '--correct: '+ summery[0] + '%;--wrong: '+ summery[0] + '%;';
+
+        const correct_text_p = this.createElement('p','correct');
+        correct_text_p.innerText = summery[0] + '% correct';
+
+        const wrong_text_p = this.createElement('p','wrong');
+        wrong_text_p.innerText = summery[1] + '% wrong';
+
+        const summery_categories_div = this.createElement('div', 'categories');
+
+        const theme_text_p = this.createElement('p', 'theme');
+        theme_text_p.innerText = 'Demo theme';
+
+        const chapter_text_p = this.createElement('p', 'chapter');
+        chapter_text_p.innerText = 'Demo chapter';
+
+        summery_categories_div.appendChild(theme_text_p);
+        summery_categories_div.appendChild(chapter_text_p);
+
+        chart_div.appendChild(correct_text_p);
+        chart_div.appendChild(wrong_text_p);
+
+        chart_div.appendChild(summery_categories_div);
+
+        summery_hold_div.appendChild(chart_div);
+        contentContainer_div.appendChild(summery_hold_div);
+
+
+        this.mainElement.appendChild(contentContainer_div);
+    },
+
+
     waitFor: function(ms){
         return new Promise(resolve =>{
             setTimeout(() => {
@@ -297,7 +339,7 @@ const quiz = {
             await this.waitFor(waitTime);
 
             this.setupWaitScreen();
-            await this.waitFor(waitTime*3);
+            await this.waitFor(waitTime*2);
 
             this.setupCategorySelectScreen({},{});
             await this.waitFor(waitTime);
@@ -305,7 +347,22 @@ const quiz = {
             this.setupWaitScreen();
             await this.waitFor(waitTime);
 
-            this.setupQuestions({},{}, this.demoQuestionText,5);
+            this.setupQuestionsScreen({},{}, this.demoQuestionText,5);
+            await this.waitFor(waitTime);
+
+            this.setupWaitScreen();
+            await this.waitFor(waitTime);
+
+            this.setupResultScreen({}, {}, true)
+            await this.waitFor(waitTime);
+
+            this.setupResultScreen({}, {}, false)
+            await this.waitFor(waitTime);
+
+            this.setupWaitScreen();
+            await this.waitFor(waitTime);
+
+            this.setupSummeryScreen({}, {}, [64,36])
             await this.waitFor(waitTime);
 
             this.setupWaitScreen();
