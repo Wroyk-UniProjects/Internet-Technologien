@@ -3,11 +3,37 @@ window.addEventListener("load", () => quiz.init())
 const quiz = {
     demoQuestionText: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et',
 
+    passwordValid: false,
+    usernameValid: false,
+
     init : function() {
         this.setupBody('Quiz', 'Rudolf Baun');
 
         //this.setupLoginScreen();
-        this.cycleThrowScreens();
+        this.changeViewToState(this.States.loggedOut);
+    },
+
+    changeViewToState: function(state){
+        switch (state) {
+            case this.States.loggedOut:
+                this.setupLoginScreen();
+                break;
+            case this.States.loggingIn:
+
+                break;
+            case this.States.loggedIn:
+
+                break;
+            default:
+                alert('Unhandled state \'' + state + '\'');
+                break;
+        }
+    },
+
+    States: {
+        loggedOut : 'logged out',
+        loggingIn : 'logging in',
+        loggedIn : 'logged in',
     },
 
     setupBody: function(title, name) {
@@ -65,18 +91,23 @@ const quiz = {
 
         textFields_div.appendChild(usernameFiled_input);
         usernameFiled_input.type = 'text';
-        usernameFiled_input.placeholder = 'Username';
+        usernameFiled_input.placeholder = 'Username (>5 chars)';
         usernameFiled_input.value = '';
+
+        usernameFiled_input.addEventListener('input', event => this.validateOnInput(event , 'username'))
 
         textFields_div.appendChild(passwordFiled_input);
         passwordFiled_input.type = 'password';
-        passwordFiled_input.placeholder = 'Password';
+        passwordFiled_input.placeholder = 'Password (>5 chars)';
         passwordFiled_input.value = '';
+
+        passwordFiled_input.addEventListener('input', event => this.validateOnInput(event, 'password'))
 
         loginSubmit_div.appendChild(submitButton_input);
         submitButton_input.type = 'button';
         submitButton_input.value = 'Login';
-        submitButton_input.addEventListener('click', event => this.clickLoginHandler(event));
+        submitButton_input.disabled = true;
+        submitButton_input.addEventListener('click', event => this.clickLoginHandler(event, usernameFiled_input, passwordFiled_input));
 
         this.mainElement.appendChild(loginHold_div);
         
@@ -299,23 +330,25 @@ const quiz = {
         });
     },
 
-    doAfter: async function(ms, action_callback){
-        const promise = this.waitFor(ms);
-        await promise.then(action_callback);
+    clickLoginHandler: function (event, usernameFiled, passwordFiled){
+        console.log(event);
+        console.log(usernameFiled.value);
+        console.log(passwordFiled.value);
     },
 
-    doFor: async function(ms, action_callback){
-        action_callback();
-        await this.waitFor(ms);
-    },
+    validateOnInput: function (event, inputFiled){
+        const button = document.getElementById('login_submitButton').firstChild;
 
-    waitForBeforeAction: async function(ms, action_callback){
-        this.setupWaitScreen();
-        await this.doAfter(ms, this.doFor(ms, action_callback));
-    },
+        if(event.target.value.length  > 5){
+            inputFiled != 'username' ? this.usernameValid = true: this.passwordValid = true;
+            event.target.classList.remove('invalided');
+        }
+        else{
+            inputFiled != 'username' ? this.usernameValid = false: this.passwordValid = false;
+            event.target.classList.add('invalided');
+        }
 
-    clickLoginHandler: function (event){
-        console.dir(event.path);
+        this.usernameValid && this.passwordValid ? button.disabled = false: button.disabled = true;
     },
 
     createElement: (tag, htmlId = '', htmlClass = '') => {

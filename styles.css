@@ -187,6 +187,12 @@ footer p {
     box-shadow: 2px 2px 0px rgba(0, 0, 0, 0) inset;
 }
 
+#login_textFields input.invalided{
+    outline: 0px;
+    border: 1px rgb(255, 0, 0) solid;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0) inset;
+}
+
 #login_submitButton{
     display: grid;
     align-content: center;
