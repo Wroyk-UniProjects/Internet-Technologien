@@ -3,26 +3,47 @@ window.addEventListener("load", () => quiz.init())
 const quiz = {
     demoQuestionText: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et',
 
+    apiURL: 'https://www2.hs-esslingen.de/~melcher/internet-technologien/quiz/',
+
     passwordValid: false,
     usernameValid: false,
+    errorMessage: '',
 
-    init : function() {
+    token: null,
+    themes: [],
+    chapters:[],
+    selectedTheme: null,
+    selectedChapter: null,
+
+    init() {
         this.setupBody('Quiz', 'Rudolf Baun');
 
-        //this.setupLoginScreen();
-        this.changeViewToState(this.States.loggedOut);
+        this.changeViewState(this.States.loggedOut);
     },
-
-    changeViewToState: function(state){
+    
+    changeViewState(state){
         switch (state) {
             case this.States.loggedOut:
                 this.setupLoginScreen();
                 break;
             case this.States.loggingIn:
-
+                this.setupWaitScreen();
                 break;
-            case this.States.loggedIn:
-
+            case this.States.loginFailed:
+                this.setupLoginScreen();
+                alert(this.errorMessage)
+                break;
+            case this.States.gettingThemes:
+                this.requestThemes();
+                break;
+            case this.States.selectTheme:
+                this.setupCategorySelectScreen(this.themes, this.chapters);
+                break;
+            case this.States.gettingChapters:
+                this.requestChapters();
+                break;
+            case this.States.selectChapter:
+                this.setupCategorySelectScreen(this.themes, this.chapters);
                 break;
             default:
                 alert('Unhandled state \'' + state + '\'');
@@ -34,6 +55,13 @@ const quiz = {
         loggedOut : 'logged out',
         loggingIn : 'logging in',
         loggedIn : 'logged in',
+        loginFailed: ' login failed',
+        gettingThemes: 'getting themes',
+        gettingThemesFailed: 'getting themes failed',
+        selectTheme: 'select theme',
+        gettingChapters: 'getting chapters',
+        gettingChaptersFails: 'getting chapters failed',
+        selectChapter: 'select chapter'
     },
 
     setupBody: function(title, name) {
@@ -133,33 +161,49 @@ const quiz = {
         const theme_select = this.createElement('select', '', 'theme');
         const chapter_select = this.createElement('select','','chapter');
 
-        const empty_theme_option = this.createElement('option')
-            empty_theme_option.innerText = "No Theme"
-            empty_theme_option.value = null
-            theme_select.appendChild(empty_theme_option)
+        
+        const empty_theme_option = this.createElement('option');
+        empty_theme_option.innerText = "No Theme";
+        empty_theme_option.value = null;
+        theme_select.appendChild(empty_theme_option);
+    
+        themes.forEach( theme => {
+            const theme_option = this.createElement('option');
+            theme_option.innerText = theme.name;
+            theme_option.value = theme.id;
+            if (this.selectedTheme == theme.id){
+                theme_option.selected = true;
+            }
+            theme_select.appendChild(theme_option);
+        })
+        
+        theme_select.disabled = this.selectedTheme != null;
+        theme_select.addEventListener('input', event => this.selectThemeHandler(event));
+        category_form.appendChild(theme_select);
 
-        for (const [key, value] in themes){
-            const theme_option = this.createElement('option')
-            theme_option.innerText = key
-            theme_option.value = value
-            theme_select.appendChild(theme_option)
-        }
-        category_form.appendChild(theme_select)
+       
+    
+        const empty_chapter_option = this.createElement('option');
+        empty_chapter_option.innerText = "No Chapter";
+        empty_chapter_option.value = null;
+        chapter_select.appendChild(empty_chapter_option);
+        chapter_select.disabled = this.selectedTheme == null;
 
-        const empty_chapter_option = this.createElement('option')
-            empty_chapter_option.innerText = "No Chapter"
-            empty_chapter_option.value = null
-            chapter_select.appendChild(empty_chapter_option)
+        chapters.forEach( chapter =>{
+            const chapter_option = this.createElement('option');
+            chapter_option.innerText = chapter.id;
+            chapter_option.value = chapter.name;
+            if (this.selectedTheme == chapter.id){
+                theme_option.selected = true;
+            }
+            chapter_select.appendChild(chapter_option);
+        })
+        
+        chapter_select.disabled = this.selectedChapter != null || this.selectedTheme == null;
+        chapter_select.addEventListener('input', event => this.selectThemeHandler(event))
+        category_form.appendChild(chapter_select);
 
-        for (const [key, value] in chapters){
-            const chapter_option = this.createElement('option')
-            chapter_option.innerText = key
-            chapter_option.value = value
-            chapter_select.appendChild(chapter_option)
-        }
-        category_form.appendChild(chapter_select)
-
-        return category_form
+        return category_form;
     },
 
     setupCategorySelectScreen: function(themes, chapters){
@@ -334,6 +378,18 @@ const quiz = {
         console.log(event);
         console.log(usernameFiled.value);
         console.log(passwordFiled.value);
+        this.sentLoginRequest(usernameFiled.value, passwordFiled.value);
+
+    },
+
+    selectThemeHandler(event){
+        this.selectedTheme = event.target.value;
+        this.changeViewState(this.States.gettingChapters);
+    },
+
+    selectChapterHandler(event){
+        this.selectedChapter = event.target.value;
+        this.changeViewState(this.States.selectTheme);
     },
 
     validateOnInput: function (event, inputFiled){
@@ -362,44 +418,73 @@ const quiz = {
         return element;
     },
 
-    cycleThrowScreens: async function(){
-        const waitTime = 4000;
+    sentLoginRequest(username, password){
+        this.changeViewState(this.States.loggingIn);
+        const request = this.apiURL + '?request=login&userid='+ username +'&password='+ password;
+        fetch(request)
+            .then( response => {
+                response.json().then( data =>{
+                    if (data.status == 'error'){
+                        //console.error(data.status + " " + data.code)
+                        this.errorMessage = data.message
+                        this.changeViewState(this.States.loginFailed)
+                    }else{
+                        this.token = data.token
+                        this.changeViewState(this.States.gettingThemes)
+                    }
+        })}).catch(res => this.changeViewState(this.States.loginFailed));
+    },
 
-        while (true) {
-            // TODO do nicer 
-            this.setupLoginScreen();
-            await this.waitFor(waitTime);
+    requestThemes(){
+        this.changeViewState(this.States.loggingIn);
+        const request = this.apiURL + '?request=getthemes&token='+ this.token;
+        fetch(request)
+            .then( response => {
+                response.json().then( data =>{
+                    if (data.status == 'error'){
+                        //console.error(data.status + " " + data.code)
+                        this.errorMessage = data.message
+                        this.changeViewState(this.States.gettingThemesFailed)
+                    }else{
+                        this.themes = data.themes
+                        this.changeViewState(this.States.selectTheme)
+                    }
+        })}).catch(res => this.changeViewState(this.States.gettingThemesFailed));
+    },
 
-            this.setupWaitScreen();
-            await this.waitFor(waitTime*2);
+    requestChapters(){
+        this.changeViewState(this.States.loggingIn);
+        const request = this.apiURL + '?request=gettheme&theme='+ this.selectedTheme +'&token='+ this.token;
+        fetch(request)
+            .then( response => {
+                console.log(response)
+                response.json().then( data =>{
+                    if (data.status == 'error'){
+                        //console.error(data.status + " " + data.code)
+                        this.errorMessage = data.message
+                        this.changeViewState(this.States.gettingChaptersFails)
+                    }else{
+                        this.chapters = data.chapters
+                        this.changeViewState(this.States.selectChapter)
+                    }
+        })}).catch(res => this.changeViewState(this.States.gettingChaptersFails));
+    },
 
-            this.setupCategorySelectScreen({},{});
-            await this.waitFor(waitTime);
-
-            this.setupWaitScreen();
-            await this.waitFor(waitTime);
-
-            this.setupQuestionsScreen({},{}, this.demoQuestionText,5);
-            await this.waitFor(waitTime);
-
-            this.setupWaitScreen();
-            await this.waitFor(waitTime);
-
-            this.setupResultScreen({}, {}, true)
-            await this.waitFor(waitTime);
-
-            this.setupResultScreen({}, {}, false)
-            await this.waitFor(waitTime);
-
-            this.setupWaitScreen();
-            await this.waitFor(waitTime);
-
-            this.setupSummeryScreen({}, {}, [64,36])
-            await this.waitFor(waitTime);
-
-            this.setupWaitScreen();
-            await this.waitFor(waitTime);
-        }
-        
+    requestQuestion(){
+        this.changeViewState(this.States.loggingIn);
+        const request = this.apiURL + '?request=gettheme&theme='+ this.selectedTheme +'&token='+ this.token;
+        fetch(request)
+            .then( response => {
+                console.log(response)
+                response.json().then( data =>{
+                    if (data.status == 'error'){
+                        //console.error(data.status + " " + data.code)
+                        this.errorMessage = data.message
+                        this.changeViewState(this.States.gettingChaptersFails)
+                    }else{
+                        this.chapters = data.quiz
+                        this.changeViewState(this.States.selectChapter)
+                    }
+        })}).catch(res => this.changeViewState(this.States.gettingChaptersFails));
     }
 }
