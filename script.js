@@ -1,7 +1,6 @@
 window.addEventListener("load", () => quiz.init())
 
 const quiz = {
-    demoQuestionText: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et',
 
     apiURL: 'https://www2.hs-esslingen.de/~melcher/internet-technologien/quiz/',
 
